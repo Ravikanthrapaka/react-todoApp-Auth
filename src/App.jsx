@@ -11,12 +11,6 @@ import { useUser,useAuth } from "@clerk/clerk-react";
 
 
 
-
-
-
-
-
-
 const firebaseUrl = import.meta.env.VITE_FIREBASE_URL;
 
 
@@ -38,12 +32,14 @@ function App(){
 
     if(!task) return; 
     setFormStatus(true)
+
     axios.post(`${firebaseUrl}todos.json`,{
 
       title:task,
       createdBy:user.username
     }).then(()=>{
       setFormStatus(false);
+      taskInput.current.value = "";
       fetchTodos()
     })
 
@@ -113,6 +109,7 @@ function App(){
         <input ref={taskInput} className="mt-2 border rounded-xl p-3 w-full focus:outline-none border-neutral-300" type="text" placeholder="Add task i.e. Learn Hooks in react" />
 
       <button disabled={formStatus} onClick={handleSubmit} className="mt-2 bg-black py-3 px-8 rounded-xl text-white flex items-center gap-4">Add{!formStatus ? " " : <Loader/>}</button>
+      {/* <button onClick={handleSubmit} className="mt-2 bg-violet-200 py-3 px-5 rounded-xl text-violet-900 flex items-center gap-4">Create Task{!formStatus ? " " : <Loader/>}</button> */}
     
       </div>
       
